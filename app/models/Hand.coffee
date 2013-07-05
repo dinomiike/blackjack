@@ -17,3 +17,21 @@ class window.Hand extends Backbone.Collection
       score + if card.get 'revealed' then card.get 'value' else 0
     , 0
     if hasAce then [score, score + 10] else [score]
+
+  getScore: ->
+    playerScore = @scores()
+    if playerScore.length > 1
+      if playerScore[1] < 22
+        playerScore = playerScore[1]
+      else
+        playerScore = playerScore[0]
+    else
+      playerScore = playerScore[0]
+
+    if playerScore > 21
+      -1
+    else
+      playerScore
+
+  reveal: ->
+    @at(0).flip()
