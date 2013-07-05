@@ -13,8 +13,6 @@ class window.App extends Backbone.Model
   dealerGoes: ->
     dealer = @get('dealerHand')
     dealer.reveal()
-    if dealer.scores()[0]<17
+    while dealer.scores()[0]<17
       dealer.hit()
-      @dealerGoes()
-    else
-      dealer.getScore()
+    dealer.getScore()
