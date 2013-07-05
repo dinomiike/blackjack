@@ -5,10 +5,12 @@ class window.Hand extends Backbone.Collection
   initialize: (array, @deck, @isDealer) ->
 
   hit: ->
-    @add(@deck.pop()).last()
+    hitCard = @deck.pop()
+    @add(hitCard).last()
     if @getScore() < 0
       console.log('busted')
       @trigger('bust')
+    hitCard
 
   scores: ->
     # The scores are an array of potential scores.
