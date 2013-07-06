@@ -9,6 +9,13 @@ class window.App extends Backbone.Model
   stand: ->
     playerScore = @get('playerHand').getScore()
     dealerScore = @dealerGoes()
+    # alert if playerScore > dealerScore  then 'you win' else 'you lose'
+    if playerScore > dealerScore
+      alert 'you win'
+    else if playerScore == dealerScore
+      alert 'tie'
+    else
+      alert 'you lose'
 
   dealerGoes: ->
     dealer = @get('dealerHand')

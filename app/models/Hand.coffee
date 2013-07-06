@@ -6,7 +6,8 @@ class window.Hand extends Backbone.Collection
 
   hit: ->
     hitCard = @deck.pop()
-    @add(hitCard).last()
+    console.log(@)
+    @add(hitCard).last(
     if @getScore() < 0
       console.log('busted')
       @trigger('bust')

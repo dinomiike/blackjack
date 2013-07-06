@@ -1,24 +1,39 @@
 class window.AppView extends Backbone.View
 
   template: _.template '
-    <button class="hit-button">Hit</button> <button class="stand-button">Stand</button>
-    <div class="player-hand-container"></div>
-    <div class="dealer-hand-container"></div>
+    <div class="main">
+      <h1>Blackjack</h1>
+      <button class="hit-button">Hit</button> <button class="stand-button">Stand</button> <button class="redeal">New Game</button>
+      <div class="player-hand-container"></div>
+      <div class="dealer-hand-container"></div>
+    </div>
   '
 
   events:
     "click .hit-button": -> @model.get('playerHand').hit()
     "click .stand-button": ->
       @model.stand()
-      $('.hit-button').attr('disabled','disabled')
-      $('.stand-button').attr('disabled','disabled')
+      @disableButtons()
+
+    "click .redeal": ->
+      @enableButtons()
+
 
   initialize: ->
-    @model.get('playerHand').on 'bust', ->
+    @model.get('playerHand').on 'bust', =>
+      @disableButtons()
       alert "You busted."
     @model.get('dealerHand').on 'bust', ->
       alert "Dealer busted."
     @render()
+
+  disableButtons: ->
+    $('.hit-button').attr('disabled','disabled')
+    $('.stand-button').attr('disabled','disabled')
+
+  enableButtons: ->
+    $('.hit-button').removeAttr('disabled')
+    $('.stand-button').removeAttr('disabled')
 
   render: ->
     @$el.children().detach()
