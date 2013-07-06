@@ -5,17 +5,12 @@ class window.App extends Backbone.Model
     @set 'deck', deck = new Deck()
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
+    @set 'playerScore'
+    @set 'dealerScore'
 
   stand: ->
-    playerScore = @get('playerHand').getScore()
-    dealerScore = @dealerGoes()
-    # alert if playerScore > dealerScore  then 'you win' else 'you lose'
-    if playerScore > dealerScore
-      alert 'you win'
-    else if playerScore == dealerScore
-      alert 'tie'
-    else
-      alert 'you lose'
+    @set 'playerScore', @get('playerHand').getScore()
+    @set 'dealerScore', @dealerGoes()
 
   dealerGoes: ->
     dealer = @get('dealerHand')
@@ -23,3 +18,12 @@ class window.App extends Backbone.Model
     while dealer.scores()[0]<17
       dealer.hit()
     dealer.getScore()
+
+  redeal: =>
+    if (@get('deck').length > 20)
+      console.log(@get('deck').length)
+      @set 'playerHand', @get('deck').dealPlayer()
+      @set 'dealerHand', @get('deck').dealDealer()
+      console.log(@get('deck').length)
+    else
+      @set 'deck', deck = new Deck()

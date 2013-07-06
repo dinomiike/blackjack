@@ -15,15 +15,29 @@ class window.AppView extends Backbone.View
       @model.stand()
       @disableButtons()
 
+      playerScore = @model.get 'playerScore'
+      dealerScore = @model.get 'dealerScore'
+
+      if playerScore > dealerScore
+        alert playerScore + ', you win'
+      else if playerScore == dealerScore
+        alert 'tie'
+      else
+        alert 'you lose'
+
     "click .redeal": ->
       @enableButtons()
+      @model.redeal()
+      @initialize()
+      @render()
 
 
   initialize: ->
     @model.get('playerHand').on 'bust', =>
       @disableButtons()
       alert "You busted."
-    @model.get('dealerHand').on 'bust', ->
+    @model.get('dealerHand').on 'bust', =>
+      console.log('dealer busted')
       alert "Dealer busted."
     @render()
 

@@ -7,9 +7,8 @@ class window.Hand extends Backbone.Collection
   hit: ->
     hitCard = @deck.pop()
     console.log(@)
-    @add(hitCard).last(
+    @add(hitCard).last()
     if @getScore() < 0
-      console.log('busted')
       @trigger('bust')
     hitCard
 
@@ -27,18 +26,14 @@ class window.Hand extends Backbone.Collection
 
   getScore: ->
     playerScore = @scores()
-    if playerScore.length > 1
-      if playerScore[1] < 22
-        playerScore = playerScore[1]
-      else
-        playerScore = playerScore[0]
-    else
-      playerScore = playerScore[0]
 
-    if playerScore > 21
-      -1
+    if _.max(playerScore) < 22
+      _.max(playerScore)
     else
-      playerScore
+      if _.min(playerScore) < 22
+        _.min(playerScore)
+      else
+        -1
 
   reveal: ->
     @at(0).flip()
